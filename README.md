@@ -1,48 +1,199 @@
-# Road Lane Line Detection System
+# Detecting Road Lane Lines using OpenCV
 
-A real-time lane detection system enabling the identification of lane boundaries in a video stream using computer vision techniques.
+A computer vision project that detects road lane lines from images and videos using **Python** and **OpenCV**. This project identifies lane boundaries on roads by applying image processing techniques such as edge detection, region masking, and Hough Transform.
+
+## Project Overview
+
+Lane detection is a critical component in:
+
+- Autonomous Vehicles
+- Advanced Driver Assistance Systems (ADAS)
+- Self-driving car navigation
+- Traffic monitoring systems
+
+This project processes road images/videos and highlights detected lane lines in real time.
+
+---
 
 ## Features
-- **Region of Interest (ROI)**: Focuses only on the road area to reduce noise.
-- **Edge Detection**: Uses Canny Edge Detection to find lane markers.
-- **Line Averaging**: Stabilizes detections by averaging line segments into a single Left and Right lane.
-- **Real-time Overlay**: Draws detected lanes on the original video feed.
+
+- Detect lane lines in road images
+- Detect lane lines in video streams
+- Real-time frame processing
+- Edge detection using Canny Algorithm
+- Region of Interest masking
+- Hough Line Transform
+- Lane line visualization overlay
+
+---
+
+## Tech Stack
+
+- Python
+- OpenCV
+- NumPy
+- Matplotlib
+
+---
+
+## Project Workflow
+
+### 1. Image Preprocessing
+Convert image to grayscale for easier processing.
+
+```python
+gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+````
+
+### 2. Gaussian Blur
+
+Reduce noise from the image.
+
+```python
+blur = cv2.GaussianBlur(gray, (5,5), 0)
+```
+
+### 3. Canny Edge Detection
+
+Detect edges in road lanes.
+
+```python
+edges = cv2.Canny(blur, 50, 150)
+```
+
+### 4. Region of Interest Selection
+
+Focus only on the road area.
+
+```python
+masked = region_of_interest(edges)
+```
+
+### 5. Hough Transform
+
+Detect lane lines.
+
+```python
+lines = cv2.HoughLinesP(
+    masked,
+    rho=2,
+    theta=np.pi/180,
+    threshold=100
+)
+```
+
+### 6. Overlay Detected Lanes
+
+Draw detected lanes on original frame.
+
+---
 
 ## Project Structure
-```
-lane_detection/
+
+```bash
+Detecting-of-road-lane-lines/
 │
-├── main.py        # Entry point (Video processing loop)
-├── pipeline.py    # Core processing logic
-├── roi.py         # ROI masking
-├── utils.py       # Math and drawing helpers
-└── requirements.txt
+├── test_images/
+├── test_videos/
+├── output_images/
+├── output_videos/
+├── lane_detection.py
+├── requirements.txt
+└── README.md
 ```
 
-## Setup
+---
 
-1.  **Install Dependencies**:
-    ```bash
-    pip install -r requirements.txt
-    ```
+## Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/Adarshthakur-850/Detecting-of-road-lane-lines.git
+```
+
+Move into project directory:
+
+```bash
+cd Detecting-of-road-lane-lines
+```
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
 
 ## Usage
 
-1.  **Run with Webcam**:
-    ```bash
-    python main.py
-    ```
-    *By default, `main.py` uses camera index `0`.*
+### Run on Image
 
-2.  **Run with Video File**:
-    Modify `main.py`:
-    ```python
-    cap = cv2.VideoCapture("path/to/video.mp4")
-    ```
+```bash
+python lane_detection.py
+```
 
-3.  **Controls**:
-    - Press `q` to exit the application.
+### Run on Video
 
-## Troubleshooting
-- **No Lines Detected**: Try adjusting the `Canny` thresholds in `pipeline.py` or the `HoughLinesP` parameters.
-- **Wrong Lines**: Adjust the `polygons` vertices in `roi.py` to better match your camera's perspective.
+Modify input path in script and run:
+
+```bash
+python lane_detection.py
+```
+
+---
+
+## Output
+
+The system detects:
+
+* Left lane lines
+* Right lane lines
+* Road boundaries
+
+Output examples include processed images/videos with highlighted lanes.
+
+---
+
+## Applications
+
+* Self-driving cars
+* Traffic surveillance
+* Smart transportation systems
+* Accident prevention systems
+
+---
+
+## Future Improvements
+
+* Curved lane detection
+* Deep learning-based lane segmentation
+* Real-time webcam integration
+* Lane departure warning system
+
+---
+
+## Sample Techniques Used
+
+This project uses traditional computer vision techniques similar to widely used lane detection pipelines involving **Canny Edge Detection**, **Hough Transform**, and ROI masking. ([GitHub][1])
+
+For more advanced implementations, perspective transformation and curvature estimation are often used in modern lane detection systems. ([GitHub][2])
+
+---
+
+## Author
+
+**Adarsh Thakur**
+
+GitHub: [Adarshthakur-850 GitHub Profile](https://github.com/Adarshthakur-850?utm_source=chatgpt.com)
+
+---
+
+## License
+
+This project is open-source and available under the MIT License.
+
+
+[1]: https://github.com/adityagandhamal/road-lane-detection?utm_source=chatgpt.com "adityagandhamal/road-lane-detection"
+[2]: https://github.com/abhijitmahalle/lane-detection?utm_source=chatgpt.com "Lane Detection and Turn Prediction"
